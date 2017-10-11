@@ -9,7 +9,7 @@ IFS=$'\n\t'
 
 PREFIX=~/mylib/dzil
 
-function dzil {
+function xdzil {
   perl -I$PREFIX/lib/perl5 $PREFIX/bin/dzil $@
 }
 
@@ -18,11 +18,11 @@ if [ ! -e ~/.travis-dzil-first ]; then
     rm -rf ~/mylib/dzil
   fi
   cpanm -n -l $PREFIX Dist::Zilla Archive::Tar::Wrapper
-  dzil authordeps --missing | cpanm -l $PREFIX -n
-  dzil listdeps   --missing | cpanm -l $PREFIX -n
+  which dzil
+  xdzil authordeps --missing | cpanm -l $PREFIX -n
+  xdzil listdeps   --missing | cpanm -l $PREFIX -n
   touch ~/.travis-dzil-first
   touch ~/mylib/dzil/.perl-$DZIL_PERL_VERSION
-  which dzil
 fi
 
-dzil $@
+xdzil $@
